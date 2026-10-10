@@ -268,13 +268,13 @@ Actual results depend on the API implementation, test data, and execution enviro
 - Generate and publish HTML test reports.
 - Improve cleanup and isolation of test data between runs.
 
-## 👨‍💻 Author
+## 👤 Author
 
 **Kanak Roy Shanda**
 
-GitHub: [GitHub Profile](https://github.com/Kanak-Roy)
-LinkedIn: [LinkedIn Profile](https://www.linkedin.com/in/kanak-roy-shanda-601961238/)
-Email: kanakroyshanda@gmail.com
+- 🐙 GitHub: [Visit my GitHub](https://github.com/Kanak-Roy)
+- 💼 LinkedIn: [Connect with me on LinkedIn](https://www.linkedin.com/in/kanak-roy-shanda-601961238/)
+- 📧 Email: [kanakroyshanda@gmail.com](mailto:kanakroyshanda@gmail.com)
 ---
 
 ⭐ If you find this project useful, feel free to star the repository.
