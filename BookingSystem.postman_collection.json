@@ -1,0 +1,387 @@
+{
+  "info": {
+    "_postman_id": "8ffb00a0-7805-40ea-b8ba-6c24d1aee3f1",
+    "name": "BookingSystem",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "57640558",
+    "_collection_link": "https://go.postman.co/collection/57640558-8ffb00a0-7805-40ea-b8ba-6c24d1aee3f1?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GetBookingIds",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the status code\r\npm.test(\"verify that Status code is 200\", function () {\r\n    pm.expect(pm.response.code).to.eql(200); //compare response body status code with expected code.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response time\r\npm.test(\"verify that Response time is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(1000); //compare response body response time with expected response time.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response size\r\npm.test(\"verify that Response size is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseSize).to.be.below(300);//compare response body file size with expected file size.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response data format\r\npm.test(\"verify that Response body is showing as JSON format or not\", function () {\r\n    pm.response.to.have.jsonBody();\r\n});\r\n//=========================================================================================================\r\n// Assertion for checking specific bookingid\r\nvar responsebody = pm.response.json();\r\npm.test(\"verify that bookingid:10 is exist or not\", function () {\r\n    var exist = responsebody.some(item=>item.bookingid===10);\r\n    pm.expect(exist).to.eql(true); //check if bookingid:10 is exist or not.\r\n});\r\n//=========================================================================================================\r\n// Assertion for checking specific id with expected id\r\nvar responsebody = pm.response.json();\r\npm.test(\"verify that Response body is showing specific id with expected id or not\", function () {\r\n    pm.expect(responsebody[0].bookingid).to.eql(1); //compare response body specific id with expected id.\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/booking",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateBooking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Code for saving the response body and extracting the bookingid to save it as an environment variable.\r\nvar responsebody = pm.response.json();\r\npm.environment.set(\"id\", responsebody.bookingid); //Setting the environment variable for the id.\r\n//=========================================================================================================\r\n// Assertion for the status code\r\npm.test(\"verify that Status code is 201\", function () {\r\n    pm.expect(pm.response.code).to.eql(201); //compare response body status code with expected code.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response time\r\npm.test(\"verify that Response time is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(1000);  //compare response body response time with expected response time.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response size\r\npm.test(\"verify that Response size is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseSize).to.be.below(300); //compare response body file size with expected file size.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the First name\r\npm.test(\"verify that firstname is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"fName\")).to.eql(pm.response.json().booking.firstname); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Last name\r\npm.test(\"verify that lastname is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"lName\")).to.eql(pm.response.json().booking.lastname); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Total price\r\npm.test(\"verify that totalprice is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"totalPrice\")).to.eql(pm.response.json().booking.totalprice.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Depositpaid\r\npm.test(\"verify that depositpaid is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"dpaid\")).to.eql(pm.response.json().booking.depositpaid.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the checkin\r\npm.test(\"verify that checkin is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkIn\")).to.eql(pm.response.json().booking.bookingdates.checkin.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the checkout\r\npm.test(\"verify that checkout is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkOut\")).to.eql(pm.response.json().booking.bookingdates.checkout.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the additionalneeds\r\npm.test(\"verify that additionalneeds is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"additionalneed\")).to.eql(pm.response.json().booking.additionalneeds.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response data format\r\npm.test(\"verify that Response body is showing as JSON format or not\", function () {\r\n    pm.response.to.have.jsonBody();\r\n});"
+            ]
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Code to set the dynamic firstname in the environment\r\nvar firstName = pm.variables.replaceIn('{{$randomFirstName}}');  //Syntax to use dynamic variable. Will generate firstname randomly.\r\npm.environment.set(\"fName\", firstName);  //Setting the environment variable for the first name.\r\n//=========================================================================================================\r\n// Code to set the dynamic lastname in the environment\r\nvar lastName = pm.variables.replaceIn('{{$randomLastName}}');  //Syntax to use dynamic variable. Will generate lastname randomly.\r\npm.environment.set(\"lName\", lastName);  //Setting the environment variable for the first name.\r\n//=========================================================================================================\r\n// Code to set the dynamic total price in the environment\r\nvar totalPrice = pm.variables.replaceIn(\"{{$randomInt}}\") //Syntax to use dynamic variable. Will generate total price randomly.\r\npm.environment.set(\"totalPrice\", totalPrice);  //Setting the environment variable for the total price.\r\n//=========================================================================================================\r\n// Code to set the dynamic depositpaid(Boolean) in the environment\r\nvar depositpaid = pm.variables.replaceIn(\"{{$randomBoolean}}\") //Syntax to use dynamic variable. Will generate total depositpaid(Boolean) randomly.\r\npm.environment.set(\"dpaid\", depositpaid);  //Setting the environment variable for the depositpaid(Boolean).\r\n//=========================================================================================================\r\n//Code for generate todays date as CheckIn\r\nvar checkIn = require(\"moment\"); //Capture todays date\r\n// console.log(checkIn); //checked in console, if it worked.\r\nvar checkIndata = checkIn().format(\"YYYY-MM-DD\"); //Format the date\r\n// console.log(checkIndata); //checked in console, if it worked.\r\npm.environment.set(\"checkIn\", checkIndata);  //Setting the environment variable for the checkIn date.\r\n//=========================================================================================================\r\n//Code for generate todays date as CheckOut\r\nvar checkOut = require(\"moment\"); //Capture todays date\r\n// console.log(checkOut); //checked in console, if it worked.\r\nvar checkOutdata = checkOut().add(2, \"d\").format(\"YYYY-MM-DD\"); //checkout 2 days later and Format the date\r\n// console.log(checkOutdata); //checked in console, if it worked.\r\npm.environment.set(\"checkOut\", checkOutdata);  //Setting the environment variable for the checkOut date.\r\n//=========================================================================================================\r\n// Code to set the dynamic additionalneeds in the environment\r\nvar additionalneeds = pm.variables.replaceIn('{{$randomBsNoun}}');  //Syntax to use dynamic variable. Will generate additionalneeds randomly.\r\npm.environment.set(\"additionalneed\", additionalneeds);  //Setting the environment variable for the additionalneeds."
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"{{fName}}\",\r\n    \"lastname\": \"{{lName}}\",\r\n    \"totalprice\": {{totalPrice}},\r\n    \"depositpaid\": {{dpaid}},\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{checkIn}}\",\r\n        \"checkout\": \"{{checkOut}}\"\r\n    },\r\n    \"additionalneeds\": \"{{additionalneed}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/booking",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetBookingCreatedIDCheck",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the status code\npm.test(\"verify that Status code is 200\", function () {\n    pm.expect(pm.response.code).to.eql(200); //compare response body status code with expected code.\n});\n//=========================================================================================================\n// Assertion for the response time\npm.test(\"verify that Response time is showing as expected or not\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(1000); //compare response body response time with expected response time.\n});\n//=========================================================================================================\n// Assertion for the response size\npm.test(\"verify that Response size is showing as expected or not\", function () {\n    pm.expect(pm.response.responseSize).to.be.below(300);//compare response body file size with expected file size.\n});\n//=========================================================================================================\n// Assertion for the First name\npm.test(\"verify that firstname is showing as expected or not\", function () {\n    pm.expect(pm.environment.get(\"fName\")).to.eql(pm.response.json().firstname); //Compare environment value with response body value\n});\n//=========================================================================================================\n// Assertion for the Last name\npm.test(\"verify that lastname is showing as expected or not\", function () {\n    pm.expect(pm.environment.get(\"lName\")).to.eql(pm.response.json().lastname); //Compare environment value with response body value\n});\n//=========================================================================================================\n// Assertion for the Total price\npm.test(\"verify that totalprice is showing as expected or not\", function () {\n    pm.expect(pm.environment.get(\"totalPrice\")).to.eql(pm.response.json().totalprice.toString()); //Compare environment value with response body value\n});\n//=========================================================================================================\n// Assertion for the Depositpaid\npm.test(\"verify that depositpaid is showing as expected or not\", function () {\n    pm.expect(pm.environment.get(\"dpaid\")).to.eql(pm.response.json().depositpaid.toString()); //Compare environment value with response body value\n});\n//=========================================================================================================\n// Assertion for the checkin\npm.test(\"verify that checkin is showing as expected or not\", function () {\n    pm.expect(pm.environment.get(\"checkIn\")).to.eql(pm.response.json().bookingdates.checkin.toString()); //Compare environment value with response body value\n});\n//=========================================================================================================\n// Assertion for the checkout\npm.test(\"verify that checkout is showing as expected or not\", function () {\n    pm.expect(pm.environment.get(\"checkOut\")).to.eql(pm.response.json().bookingdates.checkout.toString()); //Compare environment value with response body value\n});\n//=========================================================================================================\n// Assertion for the additionalneeds\npm.test(\"verify that additionalneeds is showing as expected or not\", function () {\n    pm.expect(pm.environment.get(\"additionalneed\")).to.eql(pm.response.json().additionalneeds.toString()); //Compare environment value with response body value\n});\n//=========================================================================================================\n// Assertion for the response data format\npm.test(\"verify that Response body is showing as JSON format or not\", function () {\n    pm.response.to.have.jsonBody();\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/booking/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "CreateToken",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Code for saving the response token to an environment variable:\r\nvar responsebody = pm.response.json();\r\npm.environment.set(\"token\", responsebody.token);\r\n//=========================================================================================================\r\n// Assertion for the status code\r\npm.test(\"verify that Status code is 201\", function () {\r\n    pm.expect(pm.response.code).to.eql(201); //compare response body status code with expected code.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response time\r\npm.test(\"verify that Response time is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(1000);  //compare response body response time with expected response time.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response size\r\npm.test(\"verify that Response size is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseSize).to.be.below(300); //compare response body file size with expected file size.\r\n});\r\n//=========================================================================================================\r\n//Assertion for the token validation\r\npm.test(\"verify that token is generating as expected or not\", function () {\r\n    pm.expect(responsebody.token).to.be.exist; //Token is exist in the responsebody or not.\r\n});\r\n//=========================================================================================================\r\n//Assertion for the token validation\r\npm.test(\"verify that token is a string or not\", function () {\r\n    pm.expect(responsebody.token).to.be.a(\"string\"); //Token is string or not.\r\n});\r\n//=========================================================================================================\r\n//Assertion for the token validation\r\npm.test(\"verify that token is empty or not\", function () {\r\n    pm.expect(responsebody.token).to.not.be.empty; //Token is empty or not.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response data format\r\npm.test(\"verify that Response body is showing as JSON format or not\", function () {\r\n    pm.response.to.have.jsonBody();\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"password123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/auth",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "auth"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "UpdateBooking",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Code to set the dynamic firstname in the environment\r\nvar firstName = pm.variables.replaceIn('{{$randomFirstName}}');  //Syntax to use dynamic variable. Will generate firstname randomly.\r\npm.environment.set(\"fName\", firstName);  //Setting the environment variable for the first name.\r\n//=========================================================================================================\r\n// Code to set the dynamic lastname in the environment\r\nvar lastName = pm.variables.replaceIn('{{$randomLastName}}');  //Syntax to use dynamic variable. Will generate lastname randomly.\r\npm.environment.set(\"lName\", lastName);  //Setting the environment variable for the first name.\r\n//=========================================================================================================\r\n// Code to set the dynamic total price in the environment\r\nvar totalPrice = pm.variables.replaceIn(\"{{$randomInt}}\") //Syntax to use dynamic variable. Will generate total price randomly.\r\npm.environment.set(\"totalPrice\", totalPrice);  //Setting the environment variable for the total price.\r\n//=========================================================================================================\r\n// Code to set the dynamic depositpaid(Boolean) in the environment\r\nvar depositpaid = pm.variables.replaceIn(\"{{$randomBoolean}}\") //Syntax to use dynamic variable. Will generate total depositpaid(Boolean) randomly.\r\npm.environment.set(\"dpaid\", depositpaid);  //Setting the environment variable for the depositpaid(Boolean).\r\n//=========================================================================================================\r\n//Code for generate todays date as CheckIn\r\nvar checkIn = require(\"moment\"); //Capture todays date\r\n// console.log(checkIn); //checked in console, if it worked.\r\nvar checkIndata = checkIn().add(10, \"d\").format(\"YYYY-MM-DD\"); //update checkin 10 days later and Format the date\r\n// console.log(checkIndata); //checked in console, if it worked.\r\npm.environment.set(\"checkIn\", checkIndata);  //Setting the environment variable for the checkIn date.\r\n//=========================================================================================================\r\n//Code for generate todays date as CheckOut\r\nvar checkOut = require(\"moment\"); //Capture todays date\r\n// console.log(checkOut); //checked in console, if it worked.\r\nvar checkOutdata = checkOut().add(12, \"d\").format(\"YYYY-MM-DD\"); //checkout 12 days later and Format the date\r\n// console.log(checkOutdata); //checked in console, if it worked.\r\npm.environment.set(\"checkOut\", checkOutdata);  //Setting the environment variable for the checkOut date.\r\n//=========================================================================================================\r\n// Code to set the dynamic additionalneeds in the environment\r\nvar additionalneeds = pm.variables.replaceIn('{{$randomBsNoun}}');  //Syntax to use dynamic variable. Will generate additionalneeds randomly.\r\npm.environment.set(\"additionalneed\", additionalneeds);  //Setting the environment variable for the additionalneeds."
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the status code\r\npm.test(\"verify that Status code is 200\", function () {\r\n    pm.expect(pm.response.code).to.eql(200); //compare response body status code with expected code.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response time\r\npm.test(\"verify that Response time is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(1000); //compare response body response time with expected response time.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response size\r\npm.test(\"verify that Response size is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseSize).to.be.below(300); //compare response body file size with expected file size.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the First name\r\npm.test(\"verify that firstname is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"fName\")).to.eql(pm.response.json().firstname); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Last name\r\npm.test(\"verify that lastname is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"lName\")).to.eql(pm.response.json().lastname); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Total price\r\npm.test(\"verify that totalprice is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"totalPrice\")).to.eql(pm.response.json().totalprice.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Depositpaid\r\npm.test(\"verify that depositpaid is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"dpaid\")).to.eql(pm.response.json().depositpaid.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the checkin\r\npm.test(\"verify that checkin is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkIn\")).to.eql(pm.response.json().bookingdates.checkin.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the checkout\r\npm.test(\"verify that checkout is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkOut\")).to.eql(pm.response.json().bookingdates.checkout.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the additionalneeds\r\npm.test(\"verify that additionalneeds is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"additionalneed\")).to.eql(pm.response.json().additionalneeds.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response data format\r\npm.test(\"verify that Response body is showing as JSON format or not\", function () {\r\n    pm.response.to.have.jsonBody();\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Basic"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstname\": \"{{fName}}\",\r\n    \"lastname\": \"{{lName}}\",\r\n    \"totalprice\": {{totalPrice}},\r\n    \"depositpaid\": {{dpaid}},\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{checkIn}}\",\r\n        \"checkout\": \"{{checkOut}}\"\r\n    },\r\n    \"additionalneeds\": \"{{additionalneed}}\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/booking/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetBookingCreatedIDCheckAfterUpdate",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the status code\r\npm.test(\"verify that Status code is 200\", function () {\r\n    pm.expect(pm.response.code).to.eql(200); //compare response body status code with expected code.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response time\r\npm.test(\"verify that Response time is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseTime).to.be.below(1000); //compare response body response time with expected response time.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response size\r\npm.test(\"verify that Response size is showing as expected or not\", function () {\r\n    pm.expect(pm.response.responseSize).to.be.below(300);//compare response body file size with expected file size.\r\n});\r\n//=========================================================================================================\r\n// Assertion for the First name\r\npm.test(\"verify that firstname is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"fName\")).to.eql(pm.response.json().firstname); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Last name\r\npm.test(\"verify that lastname is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"lName\")).to.eql(pm.response.json().lastname); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Total price\r\npm.test(\"verify that totalprice is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"totalPrice\")).to.eql(pm.response.json().totalprice.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the Depositpaid\r\npm.test(\"verify that depositpaid is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"dpaid\")).to.eql(pm.response.json().depositpaid.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the checkin\r\npm.test(\"verify that checkin is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkIn\")).to.eql(pm.response.json().bookingdates.checkin.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the checkout\r\npm.test(\"verify that checkout is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkOut\")).to.eql(pm.response.json().bookingdates.checkout.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the additionalneeds\r\npm.test(\"verify that additionalneeds is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"additionalneed\")).to.eql(pm.response.json().additionalneeds.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response data format\r\npm.test(\"verify that Response body is showing as JSON format or not\", function () {\r\n    pm.response.to.have.jsonBody();\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/booking/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PartialUpdateBooking",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "//Code for generate todays date as CheckIn\r\nvar checkIn = require(\"moment\"); //Capture todays date\r\n// console.log(checkIn); //checked in console, if it worked.\r\nvar checkIndata = checkIn().add(15, \"d\").format(\"YYYY-MM-DD\"); //update checkin 10 days later and Format the date\r\n// console.log(checkIndata); //checked in console, if it worked.\r\npm.environment.set(\"checkIn\", checkIndata);  //Setting the environment variable for the checkIn date.\r\n//=========================================================================================================\r\n//Code for generate todays date as CheckOut\r\nvar checkOut = require(\"moment\"); //Capture todays date\r\n// console.log(checkOut); //checked in console, if it worked.\r\nvar checkOutdata = checkOut().add(20, \"d\").format(\"YYYY-MM-DD\"); //checkout 12 days later and Format the date\r\n// console.log(checkOutdata); //checked in console, if it worked.\r\npm.environment.set(\"checkOut\", checkOutdata);  //Setting the environment variable for the checkOut date."
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the checkin\r\npm.test(\"verify that checkin is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkIn\")).to.eql(pm.response.json().bookingdates.checkin.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the checkout\r\npm.test(\"verify that checkout is showing as expected or not\", function () {\r\n    pm.expect(pm.environment.get(\"checkOut\")).to.eql(pm.response.json().bookingdates.checkout.toString()); //Compare environment value with response body value\r\n});\r\n//=========================================================================================================\r\n// Assertion for the response data format\r\npm.test(\"verify that Response body is showing as JSON format or not\", function () {\r\n    pm.response.to.have.jsonBody();\r\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Basic"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"bookingdates\": {\r\n        \"checkin\": \"{{checkIn}}\",\r\n        \"checkout\": \"{{checkOut}}\"\r\n    }\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/booking/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DeleteBooking",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the status code\npm.test(\"verify that Status code is 200\", function () {\n    pm.expect(pm.response.code).to.eql(200); //compare response body status code with expected code.\n});\n//=========================================================================================================\n// Assertion for the response time\npm.test(\"verify that Response time is showing as expected or not\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(1000); //compare response body response time with expected response time.\n});\n//=========================================================================================================\n// Assertion for the response size\npm.test(\"verify that Response size is showing as expected or not\", function () {\n    pm.expect(pm.response.responseSize).to.be.below(300);//compare response body file size with expected file size.\n});\n//=========================================================================================================\n// Assertion for the Response shows\npm.test(\"verify that Response is showing as expected or not\", function () {\n    pm.expect(pm.response.text()).to.include(\"Deleted Successfully.\"); //compare response body text with expected text.\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          },
+          {
+            "key": "Authorization",
+            "value": "Basic"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/booking/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GetBookingCreatedIDCheckAfterDelete",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the status code\npm.test(\"verify that Status code is 404\", function () {\n    pm.expect(pm.response.code).to.eql(404); //compare response body status code with expected code.\n});\n//=========================================================================================================\n// Assertion for the response time\npm.test(\"verify that Response time is showing as expected or not\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(1000); //compare response body response time with expected response time.\n});\n//=========================================================================================================\n// Assertion for the response size\npm.test(\"verify that Response size is showing as expected or not\", function () {\n    pm.expect(pm.response.responseSize).to.be.below(300);//compare response body file size with expected file size.\n});\n//=========================================================================================================\n// Assertion for the Response shows\npm.test(\"verify that Response is showing as expected or not\", function () {\n    pm.expect(pm.response.text()).to.eql(\"Not Found\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/booking/{{id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "booking",
+            "{{id}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "HealthCheck-Ping",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Assertion for the status code\npm.test(\"verify that Status code is 200\", function () {\n    pm.expect(pm.response.code).to.eql(200); //compare response body status code with expected code.\n});\n//=========================================================================================================\n// Assertion for the response time\npm.test(\"verify that Response time is showing as expected or not\", function () {\n    pm.expect(pm.response.responseTime).to.be.below(1000); //compare response body response time with expected response time.\n});\n//=========================================================================================================\n// Assertion for the response size\npm.test(\"verify that Response size is showing as expected or not\", function () {\n    pm.expect(pm.response.responseSize).to.be.below(300);//compare response body file size with expected file size.\n});\n//=========================================================================================================\n// Assertion for the Response shows\npm.test(\"verify that Response is showing as expected or not\", function () {\n    pm.expect(pm.response.text()).to.eql(\"OK\");\n});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/ping",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "ping"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
