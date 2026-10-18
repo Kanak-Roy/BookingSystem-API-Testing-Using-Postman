@@ -33,12 +33,14 @@ The project is designed to practice API testing concepts and demonstrate practic
 ## 📂 Project Structure
 
 ```text
-BookingSystem-API-Testing/
+BookingSystem-API-Testing-Using-Postman/
 │
-├── BookingSystem.postman_collection.json
-├── BookingSystemEnv.postman_environment.json
+├── Screenshots/
+│   └── Newman_summary_report.png
 ├── newman/
 │   └── BookingSystem-2026-10-18-18-32-52-724-0.html
+├── BookingSystem.postman_collection.json
+├── BookingSystemEnv.postman_environment.json
 └── README.md
 ```
 
@@ -272,7 +274,7 @@ These results identify assertions that need investigation and correction. They d
 
 ### 📄 View the Full Newman HTML Report
 
-[**Open Newman Execution Report**](reports/BookingSystem-Newman-Report.html)
+Screenshots/Newman_summary_report.png
 
 The report contains request details, response information, assertion failures, and execution metrics.
 
