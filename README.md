@@ -274,7 +274,7 @@ These results identify assertions that need investigation and correction. They d
 
 ### 📄 View the Full Newman HTML Report
 
-Screenshots/Newman_summary_report.png
+[**Open Newman Execution Report**](Screenshots/Newman_summary_report.png)
 
 The report contains request details, response information, assertion failures, and execution metrics.
 
