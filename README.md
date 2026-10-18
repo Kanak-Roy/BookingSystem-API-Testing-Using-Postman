@@ -1,8 +1,8 @@
-# Booking System API Testing Using Postman
+# Booking System API Testing Using Postman & Newman
 
 ## 📌 Project Overview
 
-This project demonstrates **API testing and test automation using Postman** for a Booking System API. It includes CRUD operations, authentication, dynamic test data generation, environment variables, response validation, and automated assertions using Postman's JavaScript-based test scripts.
+This project demonstrates **API testing and test automation using Postman and report generation using Newman** for a Booking System API. It includes CRUD operations, authentication, dynamic test data generation, environment variables, response validation, and automated assertions using Postman's JavaScript-based test scripts.
 
 The project is designed to practice API testing concepts and demonstrate practical QA skills through a reusable Postman collection.
 
@@ -17,10 +17,12 @@ The project is designed to practice API testing concepts and demonstrate practic
 - Extract and reuse booking IDs and authentication tokens.
 - Validate response time, response size, and JSON response format.
 - Verify booking data before and after update and deletion.
+- Generate an HTML report with Newman to analyze test results.
 
 ## 🛠️ Tools and Technologies
 
 - **Postman** — API request execution and test automation
+- **Newman** — Command-line collection execution and generate report
 - **REST API** — HTTP methods and endpoint testing
 - **JavaScript** — Automated test scripts
 - **JSON** — Request and response data format
@@ -35,6 +37,8 @@ BookingSystem-API-Testing/
 │
 ├── BookingSystem.postman_collection.json
 ├── BookingSystemEnv.postman_environment.json
+├── newman/
+│   └── BookingSystem-2026-10-18-18-32-52-724-0.html
 └── README.md
 ```
 
@@ -238,6 +242,62 @@ When the API is available, the environment is configured correctly, and the API 
 
 Actual results depend on the API implementation, test data, and execution environment.
 
+## 📊 Newman Execution Report
+
+The following results are from the Newman run on **19 October 2026**.
+
+| Metric | Result |
+|---|---:|
+| Total requests | 10 |
+| Total assertions | 72 |
+| Failed assertions | 9 |
+| Skipped tests | 0 |
+| Total run duration | 4 seconds |
+| Average response time | 325 ms |
+| Total data received | 13.91 KB |
+
+### Report Summary
+
+The collection executed all 10 requests, but 9 assertions failed.
+
+The main failures were:
+
+- **GetBookingIds:** Response time exceeded the 1000 ms threshold, response size exceeded the 300-byte threshold, and the expected first booking ID did not match.
+- **CreateBooking:** Expected status `201`, but received `200`.
+- **CreateToken:** Expected status `201`, but received `200`.
+- **DeleteBooking:** Expected status `200`, but received `201`; the response body also did not match the expected deletion message.
+- **HealthCheck-Ping:** Expected status `200` and response `OK`, but received status `201` and response `Created`.
+
+These results identify assertions that need investigation and correction. They do not necessarily mean every affected API operation failed.
+
+### 📄 View the Full Newman HTML Report
+
+[**Open Newman Execution Report**](reports/BookingSystem-Newman-Report.html)
+
+The report contains request details, response information, assertion failures, and execution metrics.
+
+## ▶️ How to Run the Tests
+
+1. Install [Node.js](https://nodejs.org/) and Newman.
+2. Clone or download this repository.
+3. Import the Postman collection and environment into Postman, or use the files directly with Newman.
+4. From the project directory, run:
+
+```bash
+npm install -g newman
+```
+
+Need install library in the environment to generate HTML report:
+```bash
+npm install -g newman-reporter-htmlextra
+```
+
+Generate an HTML report using a compatible Newman HTML reporter:
+
+```bash
+newman run BookingSystem.postman_collection.json -e BookingSystemEnv.postman_environment.json -r cli,htmlextra
+```
+
 ## 📚 Skills Demonstrated
 
 - Manual API Testing
@@ -254,6 +314,8 @@ Actual results depend on the API implementation, test data, and execution enviro
 - Dynamic Test Data Generation
 - Request Chaining
 - JavaScript Assertions
+- Command-line API test execution with Newman
+- HTML test reporting and failure analysis
 - Git and GitHub
 
 ## 🔮 Future Improvements
@@ -276,5 +338,7 @@ Actual results depend on the API implementation, test data, and execution enviro
 - 💼 LinkedIn: [Connect with me on LinkedIn](https://www.linkedin.com/in/kanak-roy-shanda-601961238/)
 - 📧 Email: [kanakroyshanda@gmail.com](mailto:kanakroyshanda@gmail.com)
 ---
+
+*This is a learning project demonstrating API testing and automated test execution using Postman and Newman.*
 
 ⭐ If you find this project useful, feel free to star the repository.
